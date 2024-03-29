@@ -1,11 +1,4 @@
-import {
-  IsEmail,
-  IsNotEmpty,
-  IsNumber,
-  IsOptional,
-  IsString,
-  MinLength,
-} from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
 
 export class RegisterDto {
   @IsString()
@@ -20,16 +13,5 @@ export class RegisterDto {
   @MinLength(5, { message: 'Password is should not be short' })
   readonly password: string;
 
-  @IsString()
-  readonly class: string;
-
-  @IsString()
-  readonly school: string;
-
-  @IsString()
-  readonly profilepic: string;
-
-  @IsNumber()
-  @IsOptional()
-  readonly role: number;
+  profilepic: string;
 }
