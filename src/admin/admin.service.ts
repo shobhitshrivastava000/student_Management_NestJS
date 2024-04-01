@@ -55,11 +55,16 @@ export class AdminService {
         LoginDTO.password,
         existAdmin.password,
       );
+      if (!passwordMatch) {
+        return res.status(HTTP_STATUSCODE.BAD_REQUEST).json({
+          message: MESSAGES.PASSWORD_INCORRECT,
+        });
+      }
       if (passwordMatch) {
         const accessToken = jwt.sign(
           {
             existAdmin: {
-              adminname: existAdmin.username,
+              adminname: existAdmin.adminname,
               email: existAdmin.email,
               id: existAdmin._id,
             },
@@ -72,6 +77,41 @@ export class AdminService {
           accessToken,
         });
       }
+    } catch (error) {
+      return res
+        .status(HTTP_STATUSCODE.SERVER_ERROR)
+        .json({ message: MESSAGES.UNEXPECTED_ERROR, error: error.message });
+    }
+  }
+
+  async resetPassword(passwordDto, res) {
+    try {
+      const email = passwordDto.email;
+      const user = await this.adminModel.findOne({ email });
+      if (!user) {
+        return res.status(HTTP_STATUSCODE.NOT_FOUND).json({
+          message: MESSAGES.USER_NOT_FOUND,
+        });
+      }
+      const match = await bcrypt.compare(
+        passwordDto.oldpassword,
+        user.password,
+      );
+      if (!match) {
+        return res.status(HTTP_STATUSCODE.BAD_REQUEST).json({
+          message: MESSAGES.PASSWORD_INCORRECT,
+        });
+      }
+      const hashedPassword = await bcrypt.hash(passwordDto.newpassword, 10);
+      const updateduser = await this.adminModel.findByIdAndUpdate(
+        user._id,
+        { password: hashedPassword },
+        { new: true },
+      );
+      return res.status(HTTP_STATUSCODE.SUCCESS).json({
+        message: MESSAGES.PASSWORD_RESET,
+        updateduser,
+      });
     } catch (error) {
       return res
         .status(HTTP_STATUSCODE.SERVER_ERROR)

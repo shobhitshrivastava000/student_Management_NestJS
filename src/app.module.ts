@@ -37,6 +37,7 @@ export class AppModule implements NestModule {
         method: RequestMethod.ALL,
       },
       { path: 'student/updatestudent/:studentid', method: RequestMethod.ALL },
+      { path: 'admin/resetpassword', method: RequestMethod.ALL },
     );
 
     consumer.apply(MyMiddleware).forRoutes(

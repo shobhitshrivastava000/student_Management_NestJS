@@ -15,6 +15,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 
 import { Response } from 'express';
 import { LoginDto } from './dto/admin.login';
+import { ResetPasswordDto } from './dto/admin.password.dto';
 
 @Controller('admin')
 export class AdminController {
@@ -33,5 +34,13 @@ export class AdminController {
   @Post('login')
   async loginUser(@Body() LoginDTO: LoginDto, @Res() res: Response) {
     return this.adminservices.loginUser(LoginDTO, res);
+  }
+
+  @Post('resetpassword')
+  async resetPassword(
+    @Body() passwordDto: ResetPasswordDto,
+    @Res() res: Response,
+  ) {
+    return this.adminservices.resetPassword(passwordDto, res);
   }
 }

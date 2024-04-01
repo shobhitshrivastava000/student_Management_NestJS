@@ -4,7 +4,7 @@ import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
 export class RegisterDto {
   @IsString()
   @IsNotEmpty({ message: 'Username should not Empty' })
-  readonly username: string;
+  readonly adminname: string;
 
   @IsEmail()
   readonly email: string;

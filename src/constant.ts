@@ -7,7 +7,7 @@ export const MESSAGES = {
   REGISTERED: 'ADMIN REGISTERED SUCCESSFULLY ',
   UNEXPECTED_ERROR: 'An Unexpected error occured',
   USER_NOT_FOUND: 'User not found',
-  PASSWORD_INCORRECT: 'Password is incorrect. Enter valid password',
+  PASSWORD_INCORRECT: 'Password is incorrect.',
   LOGIN: 'ADMIN LOGIN SUCCESSFULLY',
   STUDENT_REGISTERED: 'Student Registered Successfully',
   TOKEN_REQUIRED: 'TOKEN IS REQUIRED',
@@ -26,6 +26,7 @@ export const MESSAGES = {
   PARENT_DATA_UPATED: 'parent data updated successfully',
   PARENT_DELETED: 'parent deleted successfully',
   UNAUTHORIZED: 'unauthorized user',
+  PASSWORD_RESET: 'password is Updated',
 };
 export const HTTP_STATUSCODE = {
   BAD_REQUEST: 400,

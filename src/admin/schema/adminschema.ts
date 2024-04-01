@@ -6,7 +6,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 })
 export class Admin {
   @Prop({ required: true })
-  username: string;
+  adminname: string;
 
   @Prop({ required: true, unique: true })
   email: string;
