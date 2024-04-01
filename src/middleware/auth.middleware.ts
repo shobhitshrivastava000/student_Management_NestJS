@@ -26,12 +26,7 @@ export class MyMiddleware implements NestMiddleware {
     console.log('auth', decoded);
     const user = await this.userModel.findById(decoded.existUser.id);
 
-    const student = await this.studentModel.findOne({
-      createdBy: decoded.existUser.id,
-    });
-    const userid = user._id.toString();
-    const createdbyID = student.createdBy.toString();
-    if (userid !== createdbyID) {
+    if (!user) {
       return res.status(HTTP_STATUSCODE.UNAUTHORIZED).json({
         message: MESSAGES.UNAUTHORIZED,
       });

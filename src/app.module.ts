@@ -31,17 +31,19 @@ import { StudentMiddleware } from './middleware/studentauth.midlleware';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(StudentMiddleware).forRoutes({
-      path: 'student/getstudent/:studentid',
-      method: RequestMethod.ALL,
-    });
+    consumer.apply(StudentMiddleware).forRoutes(
+      {
+        path: 'student/getstudent/:studentid',
+        method: RequestMethod.ALL,
+      },
+      { path: 'student/updatestudent/:studentid', method: RequestMethod.ALL },
+    );
 
     consumer.apply(MyMiddleware).forRoutes(
       //Middleware Routes for student
       { path: 'student/createstudent', method: RequestMethod.ALL },
       { path: 'student/getallstudent', method: RequestMethod.ALL },
-      // { path: 'student/getstudent/:studentid', method: RequestMethod.ALL },
-      { path: 'student/updatestudent/:studentid', method: RequestMethod.ALL },
+
       { path: 'student/deletestudent/:studentid', method: RequestMethod.ALL },
 
       //Middleware Routes for Parents
