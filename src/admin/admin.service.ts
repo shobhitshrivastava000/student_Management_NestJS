@@ -1,18 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { User } from './schema/UserSchema';
+import { Admin } from './schema/adminschema';
 import mongoose from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
-import { RegisterDto } from './dto/user.register';
+import { RegisterDto } from './dto/admin.register';
 import { HTTP_STATUSCODE, MESSAGES } from 'src/constant';
 import { Response } from 'express';
 
 @Injectable()
-export class UserService {
+export class AdminService {
   constructor(
-    @InjectModel(User.name)
-    private userModel: mongoose.Model<User>,
+    @InjectModel(Admin.name)
+    private adminModel: mongoose.Model<Admin>,
   ) {}
 
   async registerUser(
@@ -23,7 +23,7 @@ export class UserService {
     try {
       const hashedPassword = await bcrypt.hash(registerDTO.password, 10);
       registerDTO.profilepic = file ? file.path : null;
-      const newUser = await this.userModel.create({
+      const newUser = await this.adminModel.create({
         ...registerDTO,
         password: hashedPassword,
       });
@@ -42,26 +42,26 @@ export class UserService {
   async loginUser(LoginDTO, res: Response) {
     try {
       const email = LoginDTO.email;
-      const existUser = await this.userModel.findOne(
+      const existAdmin = await this.adminModel.findOne(
         { email },
         'username email password',
       );
-      if (!existUser) {
+      if (!existAdmin) {
         return res
           .status(HTTP_STATUSCODE.BAD_REQUEST)
           .json({ message: MESSAGES.USER_NOT_FOUND });
       }
       const passwordMatch = await bcrypt.compare(
         LoginDTO.password,
-        existUser.password,
+        existAdmin.password,
       );
       if (passwordMatch) {
         const accessToken = jwt.sign(
           {
-            existUser: {
-              username: existUser.username,
-              email: existUser.email,
-              id: existUser._id,
+            existAdmin: {
+              adminname: existAdmin.username,
+              email: existAdmin.email,
+              id: existAdmin._id,
             },
           },
           process.env.ACCESSTOKEN_SECRET,

@@ -1,3 +1,4 @@
+import { AdminService } from './admin.service';
 import {
   Body,
   Controller,
@@ -7,17 +8,17 @@ import {
   UseInterceptors,
   ValidationPipe,
 } from '@nestjs/common';
-import { UserService } from './user.service';
-import { RegisterDto } from './dto/user.register';
+
+import { RegisterDto } from './dto/admin.register';
 
 import { FileInterceptor } from '@nestjs/platform-express';
 
 import { Response } from 'express';
-import { LoginDto } from './dto/user.login';
+import { LoginDto } from './dto/admin.login';
 
-@Controller('user')
-export class UserController {
-  constructor(private userservices: UserService) {}
+@Controller('admin')
+export class AdminController {
+  constructor(private adminservices: AdminService) {}
 
   @Post('register')
   @UseInterceptors(FileInterceptor('profilepic'))
@@ -26,11 +27,11 @@ export class UserController {
     @Body(new ValidationPipe()) registerDTO: RegisterDto,
     @Res() res: Response,
   ) {
-    return this.userservices.registerUser(registerDTO, file, res);
+    return this.adminservices.registerUser(registerDTO, file, res);
   }
 
   @Post('login')
   async loginUser(@Body() LoginDTO: LoginDto, @Res() res: Response) {
-    return this.userservices.loginUser(LoginDTO, res);
+    return this.adminservices.loginUser(LoginDTO, res);
   }
 }

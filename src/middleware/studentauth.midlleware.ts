@@ -1,3 +1,5 @@
+//Student Auth for Login, UPdate, View Data
+
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 
@@ -6,12 +8,12 @@ import * as jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import { HTTP_STATUSCODE, MESSAGES } from 'src/constant';
 import { Student } from 'src/student/schema/studentSchema';
-import { User } from 'src/user/schema/UserSchema';
+import { Admin } from 'src/admin/schema/adminschema';
 @Injectable()
 export class StudentMiddleware implements NestMiddleware {
   constructor(
-    @InjectModel(User.name)
-    private userModel: mongoose.Model<User>,
+    @InjectModel(Admin.name)
+    private adminModel: mongoose.Model<Admin>,
     @InjectModel(Student.name)
     private studentModel: mongoose.Model<Student>,
   ) {}
@@ -35,9 +37,9 @@ export class StudentMiddleware implements NestMiddleware {
       }
       next();
     } else {
-      const user = await this.userModel.findById(decoded.existUser.id);
-      console.log(user);
-      if (!user) {
+      const admin = await this.adminModel.findById(decoded.existAdmin.id);
+      console.log(admin);
+      if (!admin) {
         return res.status(HTTP_STATUSCODE.UNAUTHORIZED).json({
           message: MESSAGES.UNAUTHORIZED,
         });

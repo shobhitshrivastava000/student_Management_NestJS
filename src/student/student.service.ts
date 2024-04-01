@@ -41,18 +41,19 @@ export class StudentService {
 
   async getAllstudent(res: Response) {
     try {
-      const student = await this.studentModel.find();
+      const student = await this.studentModel.find({});
+
       if (!student) {
         return res.status(HTTP_STATUSCODE.NOT_FOUND).json({
           message: MESSAGES.STUDENT_NOT_FOUND,
           statusCode: HTTP_STATUSCODE.NOT_FOUND,
         });
       }
-      return {
+      return res.status(HTTP_STATUSCODE.NOT_FOUND).json({
         message: MESSAGES.ALL_STUDENTS,
         statusCode: HTTP_STATUSCODE.SUCCESS,
         student,
-      };
+      });
     } catch (error) {
       return res
         .status(HTTP_STATUSCODE.SERVER_ERROR)

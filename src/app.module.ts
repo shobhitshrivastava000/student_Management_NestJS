@@ -7,13 +7,13 @@ import {
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
-import { UserModule } from './user/user.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { StudentModule } from './student/student.module';
 import { ParentModule } from './parent/parent.module';
 import { MyMiddleware } from './middleware/auth.middleware';
 import { StudentMiddleware } from './middleware/studentauth.midlleware';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -22,7 +22,7 @@ import { StudentMiddleware } from './middleware/studentauth.midlleware';
       isGlobal: true,
     }),
     MongooseModule.forRoot(process.env.MONGODB_URL),
-    UserModule,
+    AdminModule,
     StudentModule,
     ParentModule,
   ],
@@ -43,7 +43,6 @@ export class AppModule implements NestModule {
       //Middleware Routes for student
       { path: 'student/createstudent', method: RequestMethod.ALL },
       { path: 'student/getallstudent', method: RequestMethod.ALL },
-
       { path: 'student/deletestudent/:studentid', method: RequestMethod.ALL },
 
       //Middleware Routes for Parents

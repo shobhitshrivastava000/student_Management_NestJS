@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
+import { AdminController } from './admin.controller';
+import { AdminService } from './admin.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { UserSchema } from './schema/UserSchema';
-import { UserController } from './user.controller';
-import { UserService } from './user.service';
+import { AdminSchema } from './schema/adminschema';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
+    MongooseModule.forFeature([{ name: 'Admin', schema: AdminSchema }]),
     MulterModule.register({
       storage: diskStorage({
         destination: './uploads',
@@ -19,8 +19,8 @@ import { diskStorage } from 'multer';
       }),
     }),
   ],
-  controllers: [UserController],
-  providers: [UserService],
+  controllers: [AdminController],
+  providers: [AdminService],
   exports: [MongooseModule],
 })
-export class UserModule {}
+export class AdminModule {}

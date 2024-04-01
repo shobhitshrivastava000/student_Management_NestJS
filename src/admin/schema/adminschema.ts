@@ -1,9 +1,10 @@
+//Admin Schema
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 @Schema({
   timestamps: true,
 })
-export class User {
+export class Admin {
   @Prop({ required: true })
   username: string;
 
@@ -16,4 +17,4 @@ export class User {
   @Prop({ required: true })
   profilepic: string;
 }
-export const UserSchema = SchemaFactory.createForClass(User);
+export const AdminSchema = SchemaFactory.createForClass(Admin);

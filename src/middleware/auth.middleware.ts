@@ -6,17 +6,18 @@ import * as jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import { HTTP_STATUSCODE, MESSAGES } from 'src/constant';
 import { Student } from 'src/student/schema/studentSchema';
-import { User } from 'src/user/schema/UserSchema';
+import { Admin } from 'src/admin/schema/adminschema';
 @Injectable()
 export class MyMiddleware implements NestMiddleware {
   constructor(
-    @InjectModel(User.name)
-    private userModel: mongoose.Model<User>,
+    @InjectModel(Admin.name)
+    private adminModel: mongoose.Model<Admin>,
     @InjectModel(Student.name)
     private studentModel: mongoose.Model<Student>,
   ) {}
   async use(req: Request, res: Response, next: NextFunction) {
     const token = req.headers['authorization'];
+
     if (!token) {
       return res.status(HTTP_STATUSCODE.BAD_REQUEST).json({
         message: MESSAGES.TOKEN_REQUIRED,
@@ -24,9 +25,9 @@ export class MyMiddleware implements NestMiddleware {
     }
     const decoded = jwt.verify(token, process.env.ACCESSTOKEN_SECRET);
     console.log('auth', decoded);
-    const user = await this.userModel.findById(decoded.existUser.id);
+    const admin = await this.adminModel.findById(decoded.existAdmin.id);
 
-    if (!user) {
+    if (!admin) {
       return res.status(HTTP_STATUSCODE.UNAUTHORIZED).json({
         message: MESSAGES.UNAUTHORIZED,
       });
