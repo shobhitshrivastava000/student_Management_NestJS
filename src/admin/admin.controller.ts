@@ -15,7 +15,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 
 import { Response } from 'express';
 import { LoginDto } from './dto/admin.login';
-import { ResetPasswordDto } from './dto/admin.password.dto';
+import { ResetPasswordDto } from './dto/admin.resetpassword.dto';
 
 @Controller('admin')
 export class AdminController {
