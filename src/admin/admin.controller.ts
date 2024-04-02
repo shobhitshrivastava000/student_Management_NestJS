@@ -23,17 +23,17 @@ export class AdminController {
 
   @Post('register')
   @UseInterceptors(FileInterceptor('profilepic'))
-  async registerUser(
+  async registerAdmin(
     @UploadedFile() file,
     @Body(new ValidationPipe()) registerDTO: RegisterDto,
     @Res() res: Response,
   ) {
-    return this.adminservices.registerUser(registerDTO, file, res);
+    return this.adminservices.registerAdmin(registerDTO, file, res);
   }
 
   @Post('login')
-  async loginUser(@Body() LoginDTO: LoginDto, @Res() res: Response) {
-    return this.adminservices.loginUser(LoginDTO, res);
+  async loginAdmin(@Body() LoginDTO: LoginDto, @Res() res: Response) {
+    return this.adminservices.loginAdmin(LoginDTO, res);
   }
 
   @Post('resetpassword')

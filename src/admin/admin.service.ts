@@ -15,7 +15,7 @@ export class AdminService {
     private adminModel: mongoose.Model<Admin>,
   ) {}
 
-  async registerUser(
+  async registerAdmin(
     registerDTO: RegisterDto,
     file: Express.Multer.File,
     res: Response,
@@ -39,7 +39,7 @@ export class AdminService {
     }
   }
 
-  async loginUser(LoginDTO, res: Response) {
+  async loginAdmin(LoginDTO, res: Response) {
     try {
       const email = LoginDTO.email;
       const existAdmin = await this.adminModel.findOne(
