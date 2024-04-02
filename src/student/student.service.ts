@@ -46,12 +46,12 @@ export class StudentService {
       if (!student) {
         return res.status(HTTP_STATUSCODE.NOT_FOUND).json({
           message: MESSAGES.STUDENT_NOT_FOUND,
-          statusCode: HTTP_STATUSCODE.NOT_FOUND,
         });
       }
-      return res.status(HTTP_STATUSCODE.NOT_FOUND).json({
+
+      return res.status(HTTP_STATUSCODE.SUCCESS).json({
         message: MESSAGES.ALL_STUDENTS,
-        statusCode: HTTP_STATUSCODE.SUCCESS,
+
         student,
       });
     } catch (error) {
@@ -67,7 +67,6 @@ export class StudentService {
       if (!student) {
         return res.status(HTTP_STATUSCODE.NOT_FOUND).json({
           message: MESSAGES.STUDENT_NOT_FOUND,
-          statusCode: HTTP_STATUSCODE.NOT_FOUND,
         });
       }
 
@@ -94,7 +93,6 @@ export class StudentService {
       if (!student) {
         return res.status(HTTP_STATUSCODE.NOT_FOUND).json({
           message: MESSAGES.STUDENT_NOT_FOUND,
-          statusCode: HTTP_STATUSCODE.NOT_FOUND,
         });
       }
 
@@ -124,7 +122,6 @@ export class StudentService {
       if (!student) {
         return res.status(HTTP_STATUSCODE.NOT_FOUND).json({
           message: MESSAGES.STUDENT_NOT_FOUND,
-          statusCode: HTTP_STATUSCODE.NOT_FOUND,
         });
       }
       const deletedStudent =

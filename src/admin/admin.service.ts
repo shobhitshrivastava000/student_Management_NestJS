@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import { RegisterDto } from './dto/admin.register';
-import { HTTP_STATUSCODE, MESSAGES } from 'src/constant';
+import { HTTP_STATUSCODE, MESSAGES } from '../../src/constant';
 import { Response } from 'express';
 
 @Injectable()

@@ -16,23 +16,29 @@ export class MyMiddleware implements NestMiddleware {
     private studentModel: mongoose.Model<Student>,
   ) {}
   async use(req: Request, res: Response, next: NextFunction) {
-    const token = req.headers['authorization'];
+    try {
+      const token = req.headers['authorization'];
 
-    if (!token) {
-      return res.status(HTTP_STATUSCODE.BAD_REQUEST).json({
-        message: MESSAGES.TOKEN_REQUIRED,
-      });
+      if (!token) {
+        return res.status(HTTP_STATUSCODE.BAD_REQUEST).json({
+          message: MESSAGES.TOKEN_REQUIRED,
+        });
+      }
+      const decoded = jwt.verify(token, process.env.ACCESSTOKEN_SECRET);
+      console.log('auth', decoded);
+      const admin = await this.adminModel.findById(decoded.existAdmin.id);
+
+      if (!admin) {
+        return res.status(HTTP_STATUSCODE.UNAUTHORIZED).json({
+          message: MESSAGES.UNAUTHORIZED,
+        });
+      }
+
+      next();
+    } catch (error) {
+      return res
+        .status(HTTP_STATUSCODE.SERVER_ERROR)
+        .json({ message: MESSAGES.UNEXPECTED_ERROR, error: error.message });
     }
-    const decoded = jwt.verify(token, process.env.ACCESSTOKEN_SECRET);
-    console.log('auth', decoded);
-    const admin = await this.adminModel.findById(decoded.existAdmin.id);
-
-    if (!admin) {
-      return res.status(HTTP_STATUSCODE.UNAUTHORIZED).json({
-        message: MESSAGES.UNAUTHORIZED,
-      });
-    }
-
-    next();
   }
 }
